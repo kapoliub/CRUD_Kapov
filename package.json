@@ -1,0 +1,22 @@
+{
+  "name": "crud_kapov",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "scss": "node-sass -w src/assets/scss/ -o dist/css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kapoliub/CRUD_Kapov.git"
+  },
+  "author": "kapov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kapoliub/CRUD_Kapov/issues"
+  },
+  "homepage": "https://github.com/kapoliub/CRUD_Kapov#readme",
+  "dependencies": {
+    "node-sass": "^4.13.0"
+  }
+}
