@@ -1,5 +1,175 @@
+.hideForm{
+    display: none;
+}
+
+.emptyField:hover{
+    animation: 1.2s ease-in-out trambling-animation;
+}
+@keyframes trambling-animation {
+    0%, 50%, 100% {
+        transform: rotate(0deg);
+    }
+    10%, 30% {
+        transform: rotate(-10deg);
+    }
+    20%, 40% {
+        transform: rotate(10deg);
+    }
+}
+
 header{
-    a{
-        color: black;
+    .row{
+        padding: 10px;
+        background-color: #485C7B;
+        color: white;
+        button{
+            margin-left: 10px;
+        }
+    }
+}
+
+main{
+    background-color: #fff;
+    position: absolute;
+    top: 20%;
+    left: 38%;
+    width: 400px;
+    box-shadow: 0px 0px 30px 0 rgb(182, 182, 182);
+    color: #485C7B;
+    span{
+        display: block;
+    }
+
+    .formBody{
+        input, textarea{
+            display: block;
+            width: 100%;
+            margin-bottom: 20px;
+            border: 1px solid rgb(197, 198, 199);
+            border-radius: 3px;
+            height: 35px;
+        }
+        textarea{
+            resize: none;
+            overflow: scroll;
+            height: 70px;
+        }
+        label{
+            margin-bottom: 5px;
+            font-size: 0.9em;
+        }
+    }
+    .row{
+        padding: 20px;
+    }
+    .title{
+        button{
+            background-color: inherit;
+            border: none;
+            outline: none;
+            font-size: 2em;
+            svg{
+                color: rgb(197, 198, 199);
+                &:hover{
+                    color: rgb(179, 180, 180);
+                }
+                &:active{
+                    color: rgb(168, 169, 170);
+                }
+            }
+        }
+        #addEmployee{
+            background-color: inherit;
+            border: none;
+            outline: none;
+            font-size: 2em;
+            svg{
+                color: rgb(197, 198, 199);
+                &:hover{
+                    color: rgb(179, 180, 180);
+                }
+                &:active{
+                    color: rgb(168, 169, 170);
+                }
+            }
+        }
+    }
+    .footer{
+        background-color: #EDF0F1;
+        button{
+            &:first-child{
+                margin-right: 10px;
+                border: 1px solid grey;
+            }
+        }
+    }
+}
+
+section{
+    .row{
+        padding: 0 15px;
+        table{
+            width: 100%;
+            tr{
+                border-bottom: 1px solid #E9E9E9;
+                &:first-child{
+                    border-bottom-width: 4px;
+                }
+            }
+            th{
+                height: 80px;
+                padding: 10px;
+                &:last-child{
+                    width: 10%;
+                }
+            }
+            td{
+                padding: 10px;
+                height: 70px;
+            }
+        }
+        color: #485C7B;
+        #editBtn{
+            color: #F7CA57;
+            background-color: inherit;
+            border: none;
+            outline: none;
+            &:hover{
+                color: rgb(250, 194, 51);
+                &::after{
+                    content: attr(data-title);
+                    position: absolute;
+                    color: white;
+                    background-color: black;
+                    font-size: 0.8em;
+                    padding: 3px;
+                    border-radius: 3px;
+                }
+                &:active{
+                    color: rgb(250, 182, 10);
+                }
+            }
+        }
+        #deleteBtn{
+            color: #E56355;
+            background-color: inherit;
+            border: none;
+            outline: none;
+            &:hover{
+                color: rgb(226, 62, 44);
+                &::after{
+                    content: attr(data-title);
+                    position: absolute;
+                    color: white;
+                    background-color: black;
+                    font-size: 0.8em;
+                    padding: 3px;
+                    border-radius: 3px;
+                }
+                &:active{
+                    color: rgb(226, 28, 6);
+                }
+            }
+        }
     }
 }

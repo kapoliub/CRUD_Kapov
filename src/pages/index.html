@@ -9,11 +9,93 @@
       href="../../node_modules/bootstrap/dist/css/bootstrap.min.css"
     />
     <script src="../../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <title>Contacts</title>
+    <script src="../../node_modules/@fortawesome/fontawesome-free/js/all.js"></script>
+    <link rel="stylesheet" href="../../dist/css/main.css">
+    <title>Manage Employees</title>
   </head>
   <body>
-    <!-- Header should be there -->
-
-    <!-- Footer should be there -->
+    <header>
+      <div class="container">
+        <div class="row justify-content-between align-items-center">
+          <div class="col-auto">
+            <h2>Manage Employees</h2>
+          </div>
+          <div class="col-auto">
+            <button id="deleteBtn" class="btn btn-danger">
+              <i class="fas fa-minus-circle"></i>
+              <span>Delete</span>
+            </button>
+            <button id="newEmployee" class="btn btn-success">
+              <i class="fas fa-plus-circle"></i>
+              <span>Add New Employee</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+  <main id="employeeForm" class="hideForm">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 title d-flex justify-content-between align-items-center">
+          <h2>Add Employee</h2>
+          <button id="closeForm"><i class="fas fa-times" onclick="closeForm()"></i></button>
+        </div>
+      </div>
+      <form action="">
+          <div class="row formBody">
+              <div class="col-12">
+                <label for="name">Name</label>
+                <input type="text" name="name" id="nameInput" required>
+              </div>
+              <div class="col-12">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="emailInput" required>
+              </div>
+              <div class="col-12">
+                <label for="address">Address</label>
+                <textarea name="address" id="addressInput" required></textarea>
+              </div>
+              <div class="col-12">
+                <label for="phone">Phone</label>
+                <input type="tel" name="phone" id="phoneInput" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required>
+              </div>
+            </div>
+            <div class="row footer">
+              <div class="col-12 d-flex justify-content-end">
+                <button class="btn btn-light" onclick="closeForm()">Cancel</button>
+                <input id="addEmployee" type="submit" class="btn btn-success" value="Add">
+              </div>
+            </div>
+      </form>
+    </div>
+  </main>
+    <section>
+      <div class="container">
+        <div class="row">
+          <table id="table">
+            <tr>
+              <th><input type="checkbox" name="checkbox" id=""></th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Address</th>
+              <th>Phone</th>
+              <th>Action</th>
+            </tr>
+            <!-- <tr>
+              <td><input type="checkbox"></td>
+              <td>Thomas Hardy</td>
+              <td>tomhardy@mail.com</td>
+              <td>89 Chiaroscuro Rd, Portland, USA</td>
+              <td>(171) 555-2222</td>
+              <td>
+                <button id="editBtn" data-title="Edit"><i class="fas fa-pen"></i></button>
+                <button id="deleteBtn" data-title="Delete"><i class="fas fa-trash-alt"></i></button>
+              </td>
+            </tr> -->
+          </table>
+        </div>
+      </div>
+    </section>
+    <script src="../assets/js/main.js"></script>
   </body>
 </html>
