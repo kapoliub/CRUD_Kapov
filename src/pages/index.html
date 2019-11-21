@@ -21,7 +21,7 @@
             <h2>Manage Employees</h2>
           </div>
           <div class="col-auto">
-            <button id="deleteBtn" class="btn btn-danger">
+            <button id="deleteBtn" class="btn btn-danger" onclick="deleteItems()">
               <i class="fas fa-minus-circle"></i>
               <span>Delete</span>
             </button>
@@ -37,7 +37,8 @@
     <div class="container">
       <div class="row">
         <div class="col-12 title d-flex justify-content-between align-items-center">
-          <h2>Add Employee</h2>
+          <h2 id="addTitle">Add Employee</h2>
+          <h2 id="editTitle" class="hideTitle">Edit Employee</h2>
           <button id="closeForm"><i class="fas fa-times" onclick="closeForm()"></i></button>
         </div>
       </div>
@@ -63,7 +64,8 @@
             <div class="row footer">
               <div class="col-12 d-flex justify-content-end">
                 <button class="btn btn-light" onclick="closeForm()">Cancel</button>
-                <input id="addEmployee" type="submit" class="btn btn-success" value="Add">
+                <button id="hidenEditBtn" class="btn btn-warning hideBtn">Edit</button>
+                <button id="addEmployee" class="btn btn-success">Add</button>
               </div>
             </div>
       </form>
@@ -74,7 +76,7 @@
         <div class="row">
           <table id="table">
             <tr>
-              <th><input type="checkbox" name="checkbox" id=""></th>
+              <th><input type="checkbox" name="checkbox" id="mainCheckbox" onchange="changeCheckbox(this)"></th>
               <th>Name</th>
               <th>Email</th>
               <th>Address</th>

@@ -1,21 +1,8 @@
-.hideForm{
+.hideForm, .hideBtn, .hideTitle{
     display: none;
 }
 
-.emptyField:hover{
-    animation: 1.2s ease-in-out trambling-animation;
-}
-@keyframes trambling-animation {
-    0%, 50%, 100% {
-        transform: rotate(0deg);
-    }
-    10%, 30% {
-        transform: rotate(-10deg);
-    }
-    20%, 40% {
-        transform: rotate(10deg);
-    }
-}
+
 
 header{
     .row{
@@ -48,6 +35,7 @@ main{
             border: 1px solid rgb(197, 198, 199);
             border-radius: 3px;
             height: 35px;
+            padding:0 10px;
         }
         textarea{
             resize: none;
@@ -96,11 +84,12 @@ main{
     }
     .footer{
         background-color: #EDF0F1;
-        button{
-            &:first-child{
-                margin-right: 10px;
-                border: 1px solid grey;
-            }
+        .btn-light{
+            border: 1px solid grey;
+        }
+        button, input{
+            margin-left: 10px;
+            
         }
     }
 }
@@ -129,7 +118,7 @@ section{
             }
         }
         color: #485C7B;
-        #editBtn{
+        .editBtn{
             color: #F7CA57;
             background-color: inherit;
             border: none;
@@ -150,7 +139,7 @@ section{
                 }
             }
         }
-        #deleteBtn{
+        .deleteBtn{
             color: #E56355;
             background-color: inherit;
             border: none;
