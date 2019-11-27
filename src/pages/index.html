@@ -25,7 +25,7 @@
               <i class="fas fa-minus-circle"></i>
               <span>Delete</span>
             </button>
-            <button id="newEmployee" class="btn btn-success" onclick="addNewEmployeeButton()">
+            <button id="newEmployee" class="btn btn-success" onclick="addNewEmployeeButtonClick()">
               <i class="fas fa-plus-circle"></i>
               <span>Add New Employee</span>
             </button>
@@ -42,33 +42,31 @@
           <button id="closeForm"><i class="fas fa-times" onclick="closeForm()"></i></button>
         </div>
       </div>
-      <form>
-          <div class="row formBody">
-              <div class="col-12">
-                <label for="name">Name</label>
-                <input type="text" name="name" id="nameInput" required>
-              </div>
-              <div class="col-12">
-                <label for="email">Email</label>
-                <input type="email" name="email" id="emailInput" required>
-              </div>
-              <div class="col-12">
-                <label for="address">Address</label>
-                <textarea name="address" id="addressInput" required></textarea>
-              </div>
-              <div class="col-12">
-                <label for="phone">Phone</label>
-                <input type="tel" name="phone" id="phoneInput" required>
-              </div>
-            </div>
-            <div class="row footer">
-              <div class="col-12 d-flex justify-content-end">
-                <button class="btn btn-light" onclick="closeForm()">Cancel</button>
-                <button id="hidenEditBtn" class="btn btn-warning hidden" onclick="updateEmployeeInfo()">Edit</button>
-                <button id="addEmployee" class="btn btn-success" onclick="createNewElement()">Add</button>
-              </div>
-            </div>
-      </form>
+      <div class="row formBody">
+        <div class="col-12">
+          <label for="name">Name</label>
+          <input type="text" name="name" id="nameInput" required>
+        </div>
+        <div class="col-12">
+          <label for="email">Email</label>
+          <input type="email" name="email" id="emailInput" required>
+        </div>
+        <div class="col-12">
+          <label for="address">Address</label>
+          <textarea name="address" id="addressInput" required></textarea>
+        </div>
+        <div class="col-12">
+          <label for="phone">Phone</label>
+          <input type="tel" name="phone" id="phoneInput" required>
+        </div>
+      </div>
+      <div class="row footer">
+        <div class="col-12 d-flex justify-content-end">
+          <button class="btn btn-light" onclick="closeForm()">Cancel</button>
+          <button id="hidenEditBtn" class="btn btn-warning hidden" onclick="updateEmployeeInfo()">Edit</button>
+          <button id="addEmployee" class="btn btn-success" onclick="createNewElement()">Add</button>
+        </div>
+      </div>
     </div>
   </main>
     <section>
@@ -87,6 +85,7 @@
         </div>
       </div>
     </section>
+    <script src="../../node_modules/jquery/dist/jquery.min.js"></script>
     <script src="../assets/js/main.js"></script>
   </body>
 </html>

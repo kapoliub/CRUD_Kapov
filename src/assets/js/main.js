@@ -1,97 +1,108 @@
 //_____open/close new employee form_________________
-function addNewEmployeeButton(){
-    document.getElementById('employeeForm').classList.toggle('hidden');
-    if(document.getElementById('addTitle').classList.contains('hidden')){
+function addNewEmployeeButtonClick(){
+    $('#employeeForm').toggleClass('hidden');
+    focusMethod();
+    if($('#addTitle').hasClass('hidden')){
         closeForm();
-        document.getElementById('employeeForm').classList.toggle('hidden');
+        $('#employeeForm').toggleClass('hidden');
     }
+}
+focusMethod = function getFocus() {           
+    $("#nameInput").focus();
 }
 //_____main checkbox changer_______________
 function changeCheckboxesValue(elem){
-    let checkBoxes = document.getElementsByClassName('checkboxData');
+    let checkBoxes = $('.checkboxData');
     if(elem.checked){
         for(let i = 0; i < checkBoxes.length; i++){
             checkBoxes[i].checked = true;
         }
+        // $('.checkboxData').each(function(){
+        //     $(this).checked = true;
+        // })
     }
     else{
         for(let i = 0; i < checkBoxes.length; i++){
             checkBoxes[i].checked = false;;
         }
+        // $('.checkboxData').each(function(){
+        //     $(this).checked = false;
+        // })
     }
 }
 //_____________delete checked items____________________
 function deleteSelectedItems(){
-    let checkboxes = document.getElementsByClassName('checkboxData');
-    let tr = document.getElementsByTagName('tr');
+    let checkboxes = $('.checkboxData');
+    let tr = $('.userRow');
     for (let i = checkboxes.length-1; i >= 0; i--) {
         if (checkboxes[i].checked) {
-            tr[i+1].remove();
+            tr[i].remove();
         }
     }
-    document.getElementById('mainCheckbox').checked = false;
+    $('#mainCheckbox').checked = false;
     closeForm();
 }
 //_________reset form to default values____________
 function closeForm(){
-    document.getElementById('addTitle').classList.remove('hidden');
-    document.getElementById('editTitle').classList.add('hidden');
-    document.getElementById('addEmployee').classList.remove('hidden');
-    document.getElementById('hidenEditBtn').classList.add('hidden')
-    document.getElementById('employeeForm').classList.add('hidden');
+    $('#addTitle').removeClass('hidden');
+    $('#editTitle').addClass('hidden');
+    $('#addEmployee').removeClass('hidden');
+    $('#hidenEditBtn').addClass('hidden')
+    $('#employeeForm').addClass('hidden');
     
-    document.querySelector('#nameInput').value = '';
-    document.querySelector('#emailInput').value = '';
-    document.querySelector('#addressInput').value = '';
-    document.querySelector('#phoneInput').value = '';
+    $('#nameInput').val('');
+    $('#emailInput').val('');
+    $('#addressInput').val('');
+    $('#phoneInput').val('');
 }
 //__________delete row __________________________
 function deleteUserRow(id){
-    document.getElementById(id).remove();
+    $('#' + id).remove();
     closeForm();
 }
 //___________edit button click___________________
 function editButtonClick(id){
-    let oldUserName = document.querySelector('#' + id + ' .userName');
-    let oldUserEmail = document.querySelector('#' + id + ' .userEmail');
-    let oldUserAddress= document.querySelector('#' + id + ' .userAddress');
-    let oldUserPhone = document.querySelector('#' + id + ' .userPhone');
-    document.querySelector('#nameInput').value = oldUserName.innerText;
-    document.querySelector('#emailInput').value = oldUserEmail.innerText;
-    document.querySelector('#addressInput').value = oldUserAddress.innerText;
-    document.querySelector('#phoneInput').value = oldUserPhone.innerText;
-    
-    document.getElementById('addTitle').classList.add('hidden');
-    document.getElementById('editTitle').classList.remove('hidden');
-    document.getElementById('addEmployee').classList.add('hidden');
-    document.getElementById('hidenEditBtn').classList.remove('hidden')
-    document.getElementById('employeeForm').classList.remove('hidden');
+    let oldUserName = $('#' + id + ' .userName');
+    let oldUserEmail = $('#' + id + ' .userEmail');
+    let oldUserAddress= $('#' + id + ' .userAddress');
+    let oldUserPhone = $('#' + id + ' .userPhone');
 
+    $('#nameInput').val(oldUserName.text());
+    $('#emailInput').val(oldUserEmail.text());
+    $('#addressInput').val(oldUserAddress.text());
+    $('#phoneInput').val(oldUserPhone.text());
+    
+    $('#addTitle').addClass('hidden');
+    $('#editTitle').removeClass('hidden');
+    $('#addEmployee').addClass('hidden');
+    $('#hidenEditBtn').removeClass('hidden')
+    $('#employeeForm').removeClass('hidden');
+    focusMethod();
     //______save our ID________
-    document.querySelector('#employeeForm').setAttribute('customAttrID', id);
+    $('#employeeForm').attr('customAttrID', id);
 }
 //__________update employee data_________________
-function updateEmployeeInfo(id){
+function updateEmployeeInfo(){
     let newUserData = {
-        name : document.querySelector('#nameInput').value,
-        email : document.querySelector('#emailInput').value,
-        address : document.querySelector('#addressInput').value,
-        phone : document.querySelector('#phoneInput').value
+        name : $('#nameInput').val(),
+        email : $('#emailInput').val(),
+        address : $('#addressInput').val(),
+        phone : $('#phoneInput').val()
     }
 
-    let savedID = document.querySelector('#employeeForm').getAttribute('customAttrID');
-    document.querySelector('#' + savedID + ' .userName').innerText = newUserData.name;
-    document.querySelector('#' + savedID + ' .userEmail').innerText = newUserData.email;
-    document.querySelector('#' + savedID + ' .userAddress').innerText = newUserData.address;
-    document.querySelector('#' + savedID + ' .userPhone').innerText = newUserData.phone;
+    let savedID = $('#employeeForm').attr('customAttrID');
 
-    document.querySelector('#employeeForm').removeAttribute('customAttrID');
+    $('#' + savedID + ' .userName').text(newUserData.name);
+    $('#' + savedID + ' .userEmail').text(newUserData.email);
+    $('#' + savedID + ' .userAddress').text(newUserData.address);
+    $('#' + savedID + ' .userPhone').text(newUserData.phone);
+
+    $('#employeeForm').removeAttr('customAttrID');
     closeForm();
-    
 }
 //_________create a new element__________________
 function createNewElement(){
-    let randomID = String('userID' + Math.random() * 1000000).split('.')[0];
+    let randomID = String('userID-' + Math.random() * 1000000).split('.')[0];
     let employeeForm = document.querySelector('#employeeForm');
     let userName = document.querySelector('#employeeForm #nameInput');
     let userEmail = document.querySelector('#employeeForm #emailInput');
@@ -153,6 +164,7 @@ function createNewElement(){
 
     userRow.setAttribute('id', randomID);
 
+    userRow.classList.add('userRow')
     userRowName.classList.add('userName');
     userRowEmail.classList.add('userEmail');
     userRowAddress.classList.add('userAddress');
@@ -171,24 +183,23 @@ function createNewElement(){
 }
 
 // _________key event_________
-window.addEventListener('keyup', function(e){
-    {
-        if(e.keyCode == 27){
+$(window).on('keyup', function(e){
+    if(e.keyCode == 27){
         closeForm();
+    }
+    if(e.keyCode == 13){
+        if($('#addEmployee').hasClass('hidden')){
+            updateEmployeeInfo();
         }
     }
-    {
-        // if(e.keyCode == 13){
-        //     if(document.querySelector('#addTitle').classList.contains('hidden')){
-        //         document.getElementById('hidenEditBtn').click();
-        //     }
-        //     // else if(document.getElementById('employeeForm').classList.contains('hidden')==false){
-        //     //     if(document.getElementById('addTitle').classList.contains('hidden')==false){
-        //     //         document.getElementById('addEmployee').click();
-        //     //     }                
-        //     // }
-        // }
-    }
 });
+
+$('#phoneInput').on('keyup', function(e){
+    if(e.keyCode == 13){
+        $('#addEmployee').click();
+    }
+})
+
+
 
 
