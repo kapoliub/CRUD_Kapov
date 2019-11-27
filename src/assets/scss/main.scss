@@ -100,11 +100,13 @@ section{
         padding: 0 15px;
         table{
             width: 100%;
-            tr{
-                border-bottom: 1px solid #E9E9E9;
-                &:first-child{
+            thead{
+                tr{
                     border-bottom-width: 4px;
                 }
+            }
+            tr{
+                border-bottom: 1px solid #E9E9E9;
             }
             th{
                 height: 80px;

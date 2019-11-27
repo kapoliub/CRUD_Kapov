@@ -73,14 +73,20 @@
       <div class="container">
         <div class="row">
           <table id="userDataTable">
-            <tr>
-              <th><input type="checkbox" name="checkbox" id="mainCheckbox" onchange="changeCheckboxesValue(this)"></th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Address</th>
-              <th>Phone</th>
-              <th>Action</th>
-            </tr>
+            <thead>
+              <tr>
+                <th>
+                  <input type="checkbox" name="checkbox" id="mainCheckbox" onchange="changeCheckboxesValue(this)">
+                </th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="inputDataArea">
+            </tbody>
           </table>
         </div>
       </div>
