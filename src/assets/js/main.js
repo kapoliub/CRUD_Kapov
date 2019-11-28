@@ -11,36 +11,26 @@ function getFocus() {
     $("#nameInput").focus();
 }
 
-function changeCheckboxesValue(elem){
-    let checkBoxes = $('.checkboxData');
-    if(elem.checked){
-        for(let i = 0; i < checkBoxes.length; i++){
-            checkBoxes[i].checked = true;
-        }
-        // $('.checkboxData').each(function(){
-        //     $(this).checked = true;
-        // })
+function changeCheckboxesValue(){
+    if($('#mainCheckbox').prop("checked") == true){
+        $('.checkboxData').each(function(){
+            $(this).prop('checked', true);
+        })
     }
     else{
-        for(let i = 0; i < checkBoxes.length; i++){
-            checkBoxes[i].checked = false;;
-        }
-        // $('.checkboxData').each(function(){
-        //     $(this).checked = false;
-        // })
+        $('.checkboxData').each(function(){
+            $(this).prop('checked', false);
+        })
     }
 }
 
 function deleteSelectedItems(){
-    let checkboxes = $('.checkboxData');
-    let tr = $('.userRow');
-    for (let i = checkboxes.length-1; i >= 0; i--) {
-        if (checkboxes[i].checked) {
-            tr[i].remove();
+    $('.checkboxData').each(function(){
+        if($(this).prop('checked') == true){
+            $(this).closest('tr').remove();
         }
-    }
-    document.getElementById('mainCheckbox').checked = false;
-    closeForm();
+    })
+    $('#mainCheckbox').prop('checked', false);
 }
 
 function closeForm(){
@@ -101,73 +91,95 @@ function updateEmployeeInfo(){
     closeForm();
 }
 
+function setDefaultInputBorders(){
+    $('#nameInput').css('border', '1px solid rgb(197, 198, 199)');
+    $('#emailInput').css('border', '1px solid rgb(197, 198, 199)');
+    $('#addressInput').css('border', '1px solid rgb(197, 198, 199)');
+    $('#phoneInput').css('border', '1px solid rgb(197, 198, 199)');
+}
+
+function checkInputValuesRequires(){
+    if($('#nameInput').val().trim().length < 1){
+        $('#nameInput').css('border','3px solid rgba(203, 68, 75, 0.8)');
+        return
+    }    
+    if($('#emailInput').val().trim().length < 1 || $('#emailInput').val().indexOf('@') < 0){
+        $('#emailInput').css('border','3px solid rgba(203, 68, 75, 0.8)');
+        return
+    }
+    if($('#addressInput').val().trim().length < 1){
+        $('#addressInput').css('border','3px solid rgba(203, 68, 75, 0.8)');
+        return
+    }
+    if($('#phoneInput').val().trim().length < 10){
+        $('#phoneInput').css('border','3px solid rgba(203, 68, 75, 0.8)');
+        return
+    }
+    return true;
+}
+
 function createNewElement(){
     let randomID = String('userID-' + Math.random() * 1000000).split('.')[0];
-    if($('#nameInput').val().trim().length > 1){
-        if($('#emailInput').val().trim().length > 1 && $('#emailInput').val().indexOf('@') >= 0){
-            if($('#addressInput').val().trim().length > 1){
-                if($('#phoneInput').val().trim().length > 9){
-                    $('<tr>',{
-                        id : randomID,
-                        class : 'userRow'
-                    }).appendTo($('#inputDataArea'));
-                    $('<td>',{
-                        class : 'userCheckbox'
-                    }).appendTo($('#' + randomID));
-                    $('<td>',{
-                        class : 'userName'
-                    }).appendTo($('#' + randomID));
-                    $('<td>',{
-                        class : 'userEmail'
-                    }).appendTo($('#' + randomID));
-                    $('<td>',{
-                        class : 'userAddress'
-                    }).appendTo($('#' + randomID));
-                    $('<td>',{
-                        class : 'userPhone'
-                    }).appendTo($('#' + randomID));
-                    $('<td>',{
-                        class : 'userButtonsArea'
-                    }).appendTo($('#' + randomID));
-                
-                    $('<input>', {
-                        type : 'checkbox',
-                        class : 'checkboxData'
-                    }).appendTo($('#' + randomID + ' .userCheckbox'));
-                    
-                    $('<button>',{
-                        class : 'editBtn',
-                        'data-title' : 'Edit'
-                    }).appendTo($('#' + randomID + ' .userButtonsArea'))
-                    $('<button>',{
-                        class : 'deleteBtn',
-                        'data-title' : 'Delete'
-                    }).appendTo($('#' + randomID + ' .userButtonsArea'))
-                
-                    $('<i>',{
-                        class : 'fas fa-pen'
-                    }).appendTo($('#' + randomID + ' .editBtn'))
-                    $('<i>',{
-                        class : 'fas fa-trash-alt'
-                    }).appendTo($('#' + randomID + ' .deleteBtn'))
-                
-                    $('#' + randomID + ' .editBtn').on('click', function(){
-                        editButtonClick(randomID);
-                    })
-                    
-                    $('#' + randomID + ' .deleteBtn').on('click', function(){
-                        deleteUserRow(randomID);
-                    })
-                
-                    $('#' + randomID + ' .userName').text($('#nameInput').val());
-                    $('#' + randomID + ' .userEmail').text($('#emailInput').val());
-                    $('#' + randomID + ' .userAddress').text($('#addressInput').val());
-                    $('#' + randomID + ' .userPhone').text($('#phoneInput').val());
-                
-                    closeForm();
-                }
-            }
-        }
+    setDefaultInputBorders();
+    if(checkInputValuesRequires() == true){
+        $('<tr>',{
+            id : randomID,
+            class : 'userRow'
+        }).appendTo($('#inputDataArea'));
+        $('<td>',{
+            class : 'userCheckbox'
+        }).appendTo($('#' + randomID));
+        $('<td>',{
+            class : 'userName'
+        }).appendTo($('#' + randomID));
+        $('<td>',{
+            class : 'userEmail'
+        }).appendTo($('#' + randomID));
+        $('<td>',{
+            class : 'userAddress'
+        }).appendTo($('#' + randomID));
+        $('<td>',{
+            class : 'userPhone'
+        }).appendTo($('#' + randomID));
+        $('<td>',{
+            class : 'userButtonsArea'
+        }).appendTo($('#' + randomID));
+    
+        $('<input>', {
+            type : 'checkbox',
+            class : 'checkboxData'
+        }).appendTo($('#' + randomID + ' .userCheckbox'));
+        
+        $('<button>',{
+            class : 'editBtn',
+            'data-title' : 'Edit'
+        }).appendTo($('#' + randomID + ' .userButtonsArea'))
+        $('<button>',{
+            class : 'deleteBtn',
+            'data-title' : 'Delete'
+        }).appendTo($('#' + randomID + ' .userButtonsArea'))
+    
+        $('<i>',{
+            class : 'fas fa-pen'
+        }).appendTo($('#' + randomID + ' .editBtn'))
+        $('<i>',{
+            class : 'fas fa-trash-alt'
+        }).appendTo($('#' + randomID + ' .deleteBtn'))
+    
+        $('#' + randomID + ' .editBtn').on('click', function(){
+            editButtonClick(randomID);
+        })
+        
+        $('#' + randomID + ' .deleteBtn').on('click', function(){
+            deleteUserRow(randomID);
+        })
+    
+        $('#' + randomID + ' .userName').text($('#nameInput').val());
+        $('#' + randomID + ' .userEmail').text($('#emailInput').val());
+        $('#' + randomID + ' .userAddress').text($('#addressInput').val());
+        $('#' + randomID + ' .userPhone').text($('#phoneInput').val());
+    
+        closeForm();
     }
 }
 
@@ -177,33 +189,11 @@ $(window).on('keyup', function(e){
         closeForm();
     }
     if(e.keyCode == 13){
-        if($('#addEmployee').hasClass('hidden')){
+        if($('#addEmployee').hasClass('hidden') && !$('#employeeForm').hasClass('hidden')){
             updateEmployeeInfo();
+        }
+        else if(!$('#employeeForm').hasClass('hidden') && $('#editTitle').hasClass('hidden')){
+            createNewElement();
         }
     }
 });
-
-$('#nameInput').on('keyup', function(e){
-    if(e.keyCode == 13){
-        $('#addEmployee').click();
-    }
-})
-$('#emailInput').on('keyup', function(e){
-    if(e.keyCode == 13){
-        $('#addEmployee').click();
-    }
-})
-$('#addressInput').on('keyup', function(e){
-    if(e.keyCode == 13){
-        $('#addEmployee').click();
-    }
-})
-$('#phoneInput').on('keyup', function(e){
-    if(e.keyCode == 13){
-        $('#addEmployee').click();
-    }
-})
-
-
-
-
