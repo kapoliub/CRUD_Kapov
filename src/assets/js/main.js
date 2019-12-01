@@ -1,9 +1,9 @@
 function addNewEmployeeButtonClick(){
-    $('#employeeForm').toggleClass('hidden');
+    $('#employeeForm').toggle();
     getFocus();
-    if($('#addTitle').hasClass('hidden')){
+    if($('#editTitle').is(':visible')){
         closeForm();
-        $('#employeeForm').toggleClass('hidden');
+        $('#employeeForm').toggle();
     }
 }
 
@@ -34,11 +34,11 @@ function deleteSelectedItems(){
 }
 
 function closeForm(){
-    $('#addTitle').removeClass('hidden');
-    $('#editTitle').addClass('hidden');
-    $('#addEmployee').removeClass('hidden');
-    $('#hidenEditBtn').addClass('hidden')
-    $('#employeeForm').addClass('hidden');
+    $('#addTitle').show();
+    $('#editTitle').hide();
+    $('#addEmployee').show();
+    $('#hidenEditBtn').hide()
+    $('#employeeForm').hide();
     
     $('#nameInput').val('');
     $('#emailInput').val('');
@@ -52,21 +52,21 @@ function deleteUserRow(id){
 }
 
 function editButtonClick(id){
-    let oldUserName = $('#' + id + ' .userName');
-    let oldUserEmail = $('#' + id + ' .userEmail');
-    let oldUserAddress= $('#' + id + ' .userAddress');
-    let oldUserPhone = $('#' + id + ' .userPhone');
+    let oldUserName = $(`#${id} .userName`);
+    let oldUserEmail = $(`#${id} .userEmail`);
+    let oldUserAddress= $(`#${id} .userAddress`);
+    let oldUserPhone = $(`#${id} .userPhone`);
 
     $('#nameInput').val(oldUserName.text());
     $('#emailInput').val(oldUserEmail.text());
     $('#addressInput').val(oldUserAddress.text());
     $('#phoneInput').val(oldUserPhone.text());
     
-    $('#addTitle').addClass('hidden');
-    $('#editTitle').removeClass('hidden');
-    $('#addEmployee').addClass('hidden');
-    $('#hidenEditBtn').removeClass('hidden')
-    $('#employeeForm').removeClass('hidden');
+    $('#addTitle').hide();
+    $('#editTitle').show();
+    $('#addEmployee').hide();
+    $('#hidenEditBtn').show()
+    $('#employeeForm').show();
     getFocus();
     //______save our ID________
     $('#employeeForm').attr('customAttrID', id);
@@ -82,37 +82,37 @@ function updateEmployeeInfo(){
 
     let savedID = $('#employeeForm').attr('customAttrID');
 
-    $('#' + savedID + ' .userName').text(newUserData.name);
-    $('#' + savedID + ' .userEmail').text(newUserData.email);
-    $('#' + savedID + ' .userAddress').text(newUserData.address);
-    $('#' + savedID + ' .userPhone').text(newUserData.phone);
+    $(`#${savedID} .userName`).text(newUserData.name);
+    $(`#${savedID} .userEmail`).text(newUserData.email);
+    $(`#${savedID} .userAddress`).text(newUserData.address);
+    $(`#${savedID} .userPhone`).text(newUserData.phone);
 
     $('#employeeForm').removeAttr('customAttrID');
     closeForm();
 }
 
 function setDefaultInputBorders(){
-    $('#nameInput').css('border', '1px solid rgb(197, 198, 199)');
-    $('#emailInput').css('border', '1px solid rgb(197, 198, 199)');
-    $('#addressInput').css('border', '1px solid rgb(197, 198, 199)');
-    $('#phoneInput').css('border', '1px solid rgb(197, 198, 199)');
+    $('#nameInput').css('border', '1px solid #c5c6c7');
+    $('#emailInput').css('border', '1px solid #c5c6c7');
+    $('#addressInput').css('border', '1px solid #c5c6c7');
+    $('#phoneInput').css('border', '1px solid #c5c6c7');
 }
 
 function checkInputValuesRequires(){
     if($('#nameInput').val().trim().length < 1){
-        $('#nameInput').css('border','3px solid rgba(203, 68, 75, 0.8)');
+        $('#nameInput').css('border','3px solid #cb444bcc');
         return
     }    
     if($('#emailInput').val().trim().length < 1 || $('#emailInput').val().indexOf('@') < 0){
-        $('#emailInput').css('border','3px solid rgba(203, 68, 75, 0.8)');
+        $('#emailInput').css('border','3px solid #cb444bcc');
         return
     }
     if($('#addressInput').val().trim().length < 1){
-        $('#addressInput').css('border','3px solid rgba(203, 68, 75, 0.8)');
+        $('#addressInput').css('border','3px solid #cb444bcc');
         return
     }
     if($('#phoneInput').val().trim().length < 10){
-        $('#phoneInput').css('border','3px solid rgba(203, 68, 75, 0.8)');
+        $('#phoneInput').css('border','3px solid #cb444bcc');
         return
     }
     return true;
@@ -128,71 +128,71 @@ function createNewElement(){
         }).appendTo($('#inputDataArea'));
         $('<td>',{
             class : 'userCheckbox'
-        }).appendTo($('#' + randomID));
+        }).appendTo($(`#${randomID}`));
         $('<td>',{
             class : 'userName'
-        }).appendTo($('#' + randomID));
+        }).appendTo($(`#${randomID}`));
         $('<td>',{
             class : 'userEmail'
-        }).appendTo($('#' + randomID));
+        }).appendTo($(`#${randomID}`));
         $('<td>',{
             class : 'userAddress'
-        }).appendTo($('#' + randomID));
+        }).appendTo($(`#${randomID}`));
         $('<td>',{
             class : 'userPhone'
-        }).appendTo($('#' + randomID));
+        }).appendTo($(`#${randomID}`));
         $('<td>',{
             class : 'userButtonsArea'
-        }).appendTo($('#' + randomID));
+        }).appendTo($(`#${randomID}`));
     
         $('<input>', {
             type : 'checkbox',
             class : 'checkboxData'
-        }).appendTo($('#' + randomID + ' .userCheckbox'));
+        }).appendTo($(`#${randomID} .userCheckbox`));
         
         $('<button>',{
             class : 'editBtn',
             'data-title' : 'Edit'
-        }).appendTo($('#' + randomID + ' .userButtonsArea'))
+        }).appendTo($(`#${randomID} .userButtonsArea`))
         $('<button>',{
             class : 'deleteBtn',
             'data-title' : 'Delete'
-        }).appendTo($('#' + randomID + ' .userButtonsArea'))
+        }).appendTo($(`#${randomID} .userButtonsArea`))
     
         $('<i>',{
             class : 'fas fa-pen'
-        }).appendTo($('#' + randomID + ' .editBtn'))
+        }).appendTo($(`#${randomID} .editBtn`))
         $('<i>',{
             class : 'fas fa-trash-alt'
-        }).appendTo($('#' + randomID + ' .deleteBtn'))
+        }).appendTo($(`#${randomID} .deleteBtn`))
     
-        $('#' + randomID + ' .editBtn').on('click', function(){
+        $(`#${randomID} .editBtn`).on('click', function(){
             editButtonClick(randomID);
         })
         
-        $('#' + randomID + ' .deleteBtn').on('click', function(){
+        $(`#${randomID} .deleteBtn`).on('click', function(){
             deleteUserRow(randomID);
         })
     
-        $('#' + randomID + ' .userName').text($('#nameInput').val());
-        $('#' + randomID + ' .userEmail').text($('#emailInput').val());
-        $('#' + randomID + ' .userAddress').text($('#addressInput').val());
-        $('#' + randomID + ' .userPhone').text($('#phoneInput').val());
+        $(`#${randomID} .userName`).text($('#nameInput').val());
+        $(`#${randomID} .userEmail`).text($('#emailInput').val());
+        $(`#${randomID} .userAddress`).text($('#addressInput').val());
+        $(`#${randomID} .userPhone`).text($('#phoneInput').val());
     
         closeForm();
     }
 }
 
 // _________key events_________
-$(window).on('keyup', function(e){
+$('#employeeForm').on('keyup', function(e){
     if(e.keyCode == 27){
         closeForm();
     }
     if(e.keyCode == 13){
-        if($('#addEmployee').hasClass('hidden') && !$('#employeeForm').hasClass('hidden')){
+        if($('#editTitle').is(':visible') && $('#employeeForm').is(':visible')){
             updateEmployeeInfo();
         }
-        else if(!$('#employeeForm').hasClass('hidden') && $('#editTitle').hasClass('hidden')){
+        else if($('#employeeForm').is(':visible') && $('#addTitle').is(':visible')){
             createNewElement();
         }
     }
