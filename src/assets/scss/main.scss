@@ -118,6 +118,9 @@ header{
                 height: 70px;
             }
         }
+        .userButtonsArea{
+            position: relative;
+        }
         .editBtn{
             color: #F7CA57;
             background-color: inherit;
@@ -133,6 +136,8 @@ header{
                     font-size: 0.8em;
                     padding: 3px;
                     border-radius: 3px;
+                    top: -8px;
+                    left: 10px;
                 }
                 &:active{
                     color: rgb(250, 182, 10);
@@ -154,6 +159,8 @@ header{
                     font-size: 0.8em;
                     padding: 3px;
                     border-radius: 3px;
+                    top: -8px;
+                    left: 32px;
                 }
                 &:active{
                     color: rgb(226, 28, 6);

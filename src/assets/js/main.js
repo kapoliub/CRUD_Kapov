@@ -1,14 +1,11 @@
 function addNewEmployeeButtonClick(){
+    setDefaultInputBorders();
     $('#employeeForm').toggle();
-    getFocus();
+    $("#nameInput").focus();
     if($('#editTitle').is(':visible')){
         closeForm();
         $('#employeeForm').toggle();
     }
-}
-
-function getFocus() {           
-    $("#nameInput").focus();
 }
 
 function changeCheckboxesValue(){
@@ -34,16 +31,10 @@ function deleteSelectedItems(){
 }
 
 function closeForm(){
-    $('#addTitle').show();
-    $('#editTitle').hide();
-    $('#addEmployee').show();
-    $('#hidenEditBtn').hide()
-    $('#employeeForm').hide();
-    
-    $('#nameInput').val('');
-    $('#emailInput').val('');
-    $('#addressInput').val('');
-    $('#phoneInput').val('');
+    $('#addTitle, #addEmployee ').show();
+    $('#editTitle, #hidenEditBtn, #employeeForm').hide();
+    $('#nameInput, #emailInput, #addressInput, #phoneInput').val('');
+    setDefaultInputBorders();
 }
 
 function deleteUserRow(id){
@@ -62,17 +53,18 @@ function editButtonClick(id){
     $('#addressInput').val(oldUserAddress.text());
     $('#phoneInput').val(oldUserPhone.text());
     
-    $('#addTitle').hide();
-    $('#editTitle').show();
-    $('#addEmployee').hide();
-    $('#hidenEditBtn').show()
-    $('#employeeForm').show();
-    getFocus();
+    $('#addTitle, #addEmployee').hide();
+    $('#editTitle, #hidenEditBtn, #employeeForm').show();
+    $("#nameInput").focus();
     //______save our ID________
     $('#employeeForm').attr('customAttrID', id);
 }
 
 function updateEmployeeInfo(){
+    setDefaultInputBorders();
+    if(!checkInputValuesRequires()){
+        return
+    }
     let newUserData = {
         name : $('#nameInput').val(),
         email : $('#emailInput').val(),
@@ -92,27 +84,34 @@ function updateEmployeeInfo(){
 }
 
 function setDefaultInputBorders(){
-    $('#nameInput').css('border', '1px solid #c5c6c7');
-    $('#emailInput').css('border', '1px solid #c5c6c7');
-    $('#addressInput').css('border', '1px solid #c5c6c7');
-    $('#phoneInput').css('border', '1px solid #c5c6c7');
+let border = {
+    prop: 'border',
+    value: '1px solid #c5c6c7'
+};
+
+    $('#nameInput, #emailInput, #addressInput, #phoneInput').css(border.prop, border.value);
 }
 
 function checkInputValuesRequires(){
-    if($('#nameInput').val().trim().length < 1){
-        $('#nameInput').css('border','3px solid #cb444bcc');
+    let error = {
+        prop: 'border',
+        value: '3px solid #cb444bcc'
+    };
+
+    if($('#nameInput').val().trim().length < 1 || $('#nameInput').val().match(/\d/)){
+        $('#nameInput').css(error.prop, error.value);
         return
     }    
-    if($('#emailInput').val().trim().length < 1 || $('#emailInput').val().indexOf('@') < 0){
-        $('#emailInput').css('border','3px solid #cb444bcc');
+    if(!$('#emailInput').val().match(/@/)){
+        $('#emailInput').css(error.prop, error.value);
         return
     }
     if($('#addressInput').val().trim().length < 1){
-        $('#addressInput').css('border','3px solid #cb444bcc');
+        $('#addressInput').css(error.prop, error.value);
         return
     }
-    if($('#phoneInput').val().trim().length < 10){
-        $('#phoneInput').css('border','3px solid #cb444bcc');
+    if($('#phoneInput').val().trim().length < 7 || !$('#phoneInput').val().match(/\+\d/)){
+        $('#phoneInput').css(error.prop, error.value);
         return
     }
     return true;
@@ -121,79 +120,82 @@ function checkInputValuesRequires(){
 function createNewElement(){
     let randomID = String('userID-' + Math.random() * 1000000).split('.')[0];
     setDefaultInputBorders();
-    if(checkInputValuesRequires() == true){
-        $('<tr>',{
-            id : randomID,
-            class : 'userRow'
-        }).appendTo($('#inputDataArea'));
-        $('<td>',{
-            class : 'userCheckbox'
-        }).appendTo($(`#${randomID}`));
-        $('<td>',{
-            class : 'userName'
-        }).appendTo($(`#${randomID}`));
-        $('<td>',{
-            class : 'userEmail'
-        }).appendTo($(`#${randomID}`));
-        $('<td>',{
-            class : 'userAddress'
-        }).appendTo($(`#${randomID}`));
-        $('<td>',{
-            class : 'userPhone'
-        }).appendTo($(`#${randomID}`));
-        $('<td>',{
-            class : 'userButtonsArea'
-        }).appendTo($(`#${randomID}`));
-    
-        $('<input>', {
-            type : 'checkbox',
-            class : 'checkboxData'
-        }).appendTo($(`#${randomID} .userCheckbox`));
-        
-        $('<button>',{
-            class : 'editBtn',
-            'data-title' : 'Edit'
-        }).appendTo($(`#${randomID} .userButtonsArea`))
-        $('<button>',{
-            class : 'deleteBtn',
-            'data-title' : 'Delete'
-        }).appendTo($(`#${randomID} .userButtonsArea`))
-    
-        $('<i>',{
-            class : 'fas fa-pen'
-        }).appendTo($(`#${randomID} .editBtn`))
-        $('<i>',{
-            class : 'fas fa-trash-alt'
-        }).appendTo($(`#${randomID} .deleteBtn`))
-    
-        $(`#${randomID} .editBtn`).on('click', function(){
-            editButtonClick(randomID);
-        })
-        
-        $(`#${randomID} .deleteBtn`).on('click', function(){
-            deleteUserRow(randomID);
-        })
-    
-        $(`#${randomID} .userName`).text($('#nameInput').val());
-        $(`#${randomID} .userEmail`).text($('#emailInput').val());
-        $(`#${randomID} .userAddress`).text($('#addressInput').val());
-        $(`#${randomID} .userPhone`).text($('#phoneInput').val());
-    
-        closeForm();
+    if(!checkInputValuesRequires()){
+        return
     }
+    $('<tr>',{
+        id : randomID,
+        class : 'userRow'
+    }).appendTo($('#inputDataArea'));
+    $('<td>',{
+        class : 'userCheckbox'
+    }).appendTo($(`#${randomID}`));
+    $('<td>',{
+        class : 'userName'
+    }).appendTo($(`#${randomID}`));
+    $('<td>',{
+        class : 'userEmail'
+    }).appendTo($(`#${randomID}`));
+    $('<td>',{
+        class : 'userAddress'
+    }).appendTo($(`#${randomID}`));
+    $('<td>',{
+        class : 'userPhone'
+    }).appendTo($(`#${randomID}`));
+    $('<td>',{
+        class : 'userButtonsArea'
+    }).appendTo($(`#${randomID}`));
+
+    $('<input>', {
+        type : 'checkbox',
+        class : 'checkboxData'
+    }).appendTo($(`#${randomID} .userCheckbox`));
+    
+    $('<button>',{
+        class : 'editBtn',
+        'data-title' : 'Edit'
+    }).appendTo($(`#${randomID} .userButtonsArea`))
+    $('<button>',{
+        class : 'deleteBtn',
+        'data-title' : 'Delete'
+    }).appendTo($(`#${randomID} .userButtonsArea`))
+
+    $('<i>',{
+        class : 'fas fa-pen'
+    }).appendTo($(`#${randomID} .editBtn`))
+    $('<i>',{
+        class : 'fas fa-trash-alt'
+    }).appendTo($(`#${randomID} .deleteBtn`))
+
+    $(`#${randomID} .editBtn`).on('click', function(){
+        editButtonClick(randomID);
+    })
+    
+    $(`#${randomID} .deleteBtn`).on('click', function(){
+        deleteUserRow(randomID);
+    })
+
+    $(`#${randomID} .userName`).text($('#nameInput').val());
+    $(`#${randomID} .userEmail`).text($('#emailInput').val());
+    $(`#${randomID} .userAddress`).text($('#addressInput').val());
+    $(`#${randomID} .userPhone`).text($('#phoneInput').val());
+
+    closeForm();
 }
 
 // _________key events_________
-$('#employeeForm').on('keyup', function(e){
-    if(e.keyCode == 27){
-        closeForm();
-    }
-    if(e.keyCode == 13){
-        if($('#editTitle').is(':visible') && $('#employeeForm').is(':visible')){
-            updateEmployeeInfo();
+$(function(){
+    $('#employeeForm').on('keyup', function(e){
+        if(e.keyCode == 27){
+            closeForm();
         }
-        else if($('#employeeForm').is(':visible') && $('#addTitle').is(':visible')){
-            createNewElement();
+        if(e.keyCode == 13){
+            if($('#editTitle').is(':visible') && $('#employeeForm').is(':visible')){
+                updateEmployeeInfo();
+            }
+            else if($('#employeeForm').is(':visible') && $('#addTitle').is(':visible')){
+                createNewElement();
+            }
         }
-    }
+    });
 });
