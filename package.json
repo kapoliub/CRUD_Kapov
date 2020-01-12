@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "scss": "node-sass -w src/assets/scss/ -o dist/css"
+    "scss": "node-sass src/assets/scss/ -o dist/css && node-sass -w src/assets/scss/ -o dist/css"
   },
   "repository": {
     "type": "git",
@@ -17,11 +17,11 @@
   },
   "homepage": "https://github.com/kapoliub/CRUD_Kapov#readme",
   "dependencies": {
-    "bootstrap": "^4.3.1",
-    "jquery": "^3.4.1",
-    "node-sass": "^4.13.0"
+    "@fortawesome/fontawesome-free": "^5.11.2",
+    "bootstrap": "^4.3.1"
   },
   "devDependencies": {
-    "@fortawesome/fontawesome-free": "^5.11.2"
+    "jquery": "^3.4.1",
+    "node-sass": "^4.13.0"
   }
 }

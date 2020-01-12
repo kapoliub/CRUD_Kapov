@@ -1,194 +1,201 @@
-//_____open/close new employee form_________________
-function addNewEmployeeButton(){
-    document.getElementById('employeeForm').classList.toggle('hidden');
-    if(document.getElementById('addTitle').classList.contains('hidden')){
+function addNewEmployeeButtonClick(){
+    setDefaultInputBorders();
+    $('#employeeForm').toggle();
+    $("#nameInput").focus();
+    if($('#editTitle').is(':visible')){
         closeForm();
-        document.getElementById('employeeForm').classList.toggle('hidden');
+        $('#employeeForm').toggle();
     }
 }
-//_____main checkbox changer_______________
-function changeCheckboxesValue(elem){
-    let checkBoxes = document.getElementsByClassName('checkboxData');
-    if(elem.checked){
-        for(let i = 0; i < checkBoxes.length; i++){
-            checkBoxes[i].checked = true;
-        }
+
+function changeCheckboxesValue(){
+    if($('#mainCheckbox').prop("checked") == true){
+        $('.checkboxData').each(function(){
+            $(this).prop('checked', true);
+        })
     }
     else{
-        for(let i = 0; i < checkBoxes.length; i++){
-            checkBoxes[i].checked = false;;
-        }
+        $('.checkboxData').each(function(){
+            $(this).prop('checked', false);
+        })
     }
 }
-//_____________delete checked items____________________
+
 function deleteSelectedItems(){
-    let checkboxes = document.getElementsByClassName('checkboxData');
-    let tr = document.getElementsByTagName('tr');
-    for (let i = checkboxes.length-1; i >= 0; i--) {
-        if (checkboxes[i].checked) {
-            tr[i+1].remove();
+    $('.checkboxData').each(function(){
+        if($(this).prop('checked') == true){
+            $(this).closest('tr').remove();
         }
-    }
-    document.getElementById('mainCheckbox').checked = false;
-    closeForm();
+    })
+    $('#mainCheckbox').prop('checked', false);
 }
-//_________reset form to default values____________
+
 function closeForm(){
-    document.getElementById('addTitle').classList.remove('hidden');
-    document.getElementById('editTitle').classList.add('hidden');
-    document.getElementById('addEmployee').classList.remove('hidden');
-    document.getElementById('hidenEditBtn').classList.add('hidden')
-    document.getElementById('employeeForm').classList.add('hidden');
-    
-    document.querySelector('#nameInput').value = '';
-    document.querySelector('#emailInput').value = '';
-    document.querySelector('#addressInput').value = '';
-    document.querySelector('#phoneInput').value = '';
+    $('#addTitle, #addEmployee ').show();
+    $('#editTitle, #hidenEditBtn, #employeeForm').hide();
+    $('#nameInput, #emailInput, #addressInput, #phoneInput').val('');
+    setDefaultInputBorders();
 }
-//__________delete row __________________________
+
 function deleteUserRow(id){
-    document.getElementById(id).remove();
+    $('#' + id).remove();
     closeForm();
 }
-//___________edit button click___________________
+
 function editButtonClick(id){
-    let oldUserName = document.querySelector('#' + id + ' .userName');
-    let oldUserEmail = document.querySelector('#' + id + ' .userEmail');
-    let oldUserAddress= document.querySelector('#' + id + ' .userAddress');
-    let oldUserPhone = document.querySelector('#' + id + ' .userPhone');
-    document.querySelector('#nameInput').value = oldUserName.innerText;
-    document.querySelector('#emailInput').value = oldUserEmail.innerText;
-    document.querySelector('#addressInput').value = oldUserAddress.innerText;
-    document.querySelector('#phoneInput').value = oldUserPhone.innerText;
-    
-    document.getElementById('addTitle').classList.add('hidden');
-    document.getElementById('editTitle').classList.remove('hidden');
-    document.getElementById('addEmployee').classList.add('hidden');
-    document.getElementById('hidenEditBtn').classList.remove('hidden')
-    document.getElementById('employeeForm').classList.remove('hidden');
+    let oldUserName = $(`#${id} .userName`);
+    let oldUserEmail = $(`#${id} .userEmail`);
+    let oldUserAddress= $(`#${id} .userAddress`);
+    let oldUserPhone = $(`#${id} .userPhone`);
 
+    $('#nameInput').val(oldUserName.text());
+    $('#emailInput').val(oldUserEmail.text());
+    $('#addressInput').val(oldUserAddress.text());
+    $('#phoneInput').val(oldUserPhone.text());
+    
+    $('#addTitle, #addEmployee').hide();
+    $('#editTitle, #hidenEditBtn, #employeeForm').show();
+    $("#nameInput").focus();
     //______save our ID________
-    document.querySelector('#employeeForm').setAttribute('customAttrID', id);
+    $('#employeeForm').attr('customAttrID', id);
 }
-//__________update employee data_________________
-function updateEmployeeInfo(id){
+
+function updateEmployeeInfo(){
+    setDefaultInputBorders();
+    if(!checkInputValuesRequires()){
+        return
+    }
     let newUserData = {
-        name : document.querySelector('#nameInput').value,
-        email : document.querySelector('#emailInput').value,
-        address : document.querySelector('#addressInput').value,
-        phone : document.querySelector('#phoneInput').value
+        name : $('#nameInput').val(),
+        email : $('#emailInput').val(),
+        address : $('#addressInput').val(),
+        phone : $('#phoneInput').val()
     }
 
-    let savedID = document.querySelector('#employeeForm').getAttribute('customAttrID');
-    document.querySelector('#' + savedID + ' .userName').innerText = newUserData.name;
-    document.querySelector('#' + savedID + ' .userEmail').innerText = newUserData.email;
-    document.querySelector('#' + savedID + ' .userAddress').innerText = newUserData.address;
-    document.querySelector('#' + savedID + ' .userPhone').innerText = newUserData.phone;
+    let savedID = $('#employeeForm').attr('customAttrID');
 
-    document.querySelector('#employeeForm').removeAttribute('customAttrID');
+    $(`#${savedID} .userName`).text(newUserData.name);
+    $(`#${savedID} .userEmail`).text(newUserData.email);
+    $(`#${savedID} .userAddress`).text(newUserData.address);
+    $(`#${savedID} .userPhone`).text(newUserData.phone);
+
+    $('#employeeForm').removeAttr('customAttrID');
     closeForm();
-    
 }
-//_________create a new element__________________
-function createNewElement(){
-    let randomID = String('userID' + Math.random() * 1000000).split('.')[0];
-    let employeeForm = document.querySelector('#employeeForm');
-    let userName = document.querySelector('#employeeForm #nameInput');
-    let userEmail = document.querySelector('#employeeForm #emailInput');
-    let userAddress = document.querySelector('#employeeForm #addressInput');
-    let userPhone = document.querySelector('#employeeForm #phoneInput');
-    if(userName.value.trim().length < 1 || userEmail.value.trim().length < 1 || userAddress.value.trim().length < 1 || userPhone.value.trim().length < 1){
-        return;
-    }
-    //__________________________________________
-    let userDataTable = document.querySelector('#userDataTable');
-    let userRow = document.createElement('tr');
-    //__________________________________________
-    let userRowInput = document.createElement('td');
-    let userRowName = document.createElement('td');
-    let userRowEmail = document.createElement('td');
-    let userRowAddress = document.createElement('td');
-    let userRowPhone = document.createElement('td');
-    let userRowButtonsArea = document.createElement('td');
-    //_______________________________________________
-    let userRowCheckbox = document.createElement('input');
-    let editButton = document.createElement('button');
-    let deleteButton = document.createElement('button');
-    //_____________________________________
-    userRowInput.appendChild(userRowCheckbox);
-    userRowCheckbox.setAttribute('type', 'checkbox');
-    userRowCheckbox.classList.add('checkboxData');
 
-    editButton.classList.add('editBtn');
-    editButton.setAttribute('data-title', 'Edit');
-    let penIcon = document.createElement('i');
-    penIcon.classList.add('fas');
-    penIcon.classList.add('fa-pen');
-    editButton.append(penIcon);
-    editButton.addEventListener('click', function(){
+function setDefaultInputBorders(){
+let border = {
+    prop: 'border',
+    value: '1px solid #c5c6c7'
+};
+
+    $('#nameInput, #emailInput, #addressInput, #phoneInput').css(border.prop, border.value);
+}
+
+function checkInputValuesRequires(){
+    let error = {
+        prop: 'border',
+        value: '3px solid #cb444bcc'
+    };
+
+    if($('#nameInput').val().trim().length < 1 || $('#nameInput').val().match(/\d/)){
+        $('#nameInput').css(error.prop, error.value);
+        return
+    }    
+    if(!$('#emailInput').val().match(/@/)){
+        $('#emailInput').css(error.prop, error.value);
+        return
+    }
+    if($('#addressInput').val().trim().length < 1){
+        $('#addressInput').css(error.prop, error.value);
+        return
+    }
+    if($('#phoneInput').val().trim().length < 7 || !$('#phoneInput').val().match(/\+\d/)){
+        $('#phoneInput').css(error.prop, error.value);
+        return
+    }
+    return true;
+}
+
+function createNewElement(){
+    let randomID = String('userID-' + Math.random() * 1000000).split('.')[0];
+    setDefaultInputBorders();
+    if(!checkInputValuesRequires()){
+        return
+    }
+    $('<tr>',{
+        id : randomID,
+        class : 'userRow'
+    }).appendTo($('#inputDataArea'));
+    $('<td>',{
+        class : 'userCheckbox'
+    }).appendTo($(`#${randomID}`));
+    $('<td>',{
+        class : 'userName'
+    }).appendTo($(`#${randomID}`));
+    $('<td>',{
+        class : 'userEmail'
+    }).appendTo($(`#${randomID}`));
+    $('<td>',{
+        class : 'userAddress'
+    }).appendTo($(`#${randomID}`));
+    $('<td>',{
+        class : 'userPhone'
+    }).appendTo($(`#${randomID}`));
+    $('<td>',{
+        class : 'userButtonsArea'
+    }).appendTo($(`#${randomID}`));
+
+    $('<input>', {
+        type : 'checkbox',
+        class : 'checkboxData'
+    }).appendTo($(`#${randomID} .userCheckbox`));
+    
+    $('<button>',{
+        class : 'editBtn',
+        'data-title' : 'Edit'
+    }).appendTo($(`#${randomID} .userButtonsArea`))
+    $('<button>',{
+        class : 'deleteBtn',
+        'data-title' : 'Delete'
+    }).appendTo($(`#${randomID} .userButtonsArea`))
+
+    $('<i>',{
+        class : 'fas fa-pen'
+    }).appendTo($(`#${randomID} .editBtn`))
+    $('<i>',{
+        class : 'fas fa-trash-alt'
+    }).appendTo($(`#${randomID} .deleteBtn`))
+
+    $(`#${randomID} .editBtn`).on('click', function(){
         editButtonClick(randomID);
     })
-
-    deleteButton.classList.add('deleteBtn');
-    deleteButton.setAttribute('data-title', 'Delete');
-    let trashIcon = document.createElement('i');
-    trashIcon.classList.add('fas');
-    trashIcon.classList.add('fa-trash-alt');
-    deleteButton.append(trashIcon);
-    deleteButton.addEventListener('click', function(){
+    
+    $(`#${randomID} .deleteBtn`).on('click', function(){
         deleteUserRow(randomID);
     })
 
-    userRowButtonsArea.appendChild(editButton);
-    userRowButtonsArea.appendChild(deleteButton);
-    //_____________________________________________
-    userRow.appendChild(userRowInput);
-    userRow.appendChild(userRowName);
-    userRow.appendChild(userRowEmail);
-    userRow.appendChild(userRowAddress);
-    userRow.appendChild(userRowPhone);
-    userRow.appendChild(userRowButtonsArea);
+    $(`#${randomID} .userName`).text($('#nameInput').val());
+    $(`#${randomID} .userEmail`).text($('#emailInput').val());
+    $(`#${randomID} .userAddress`).text($('#addressInput').val());
+    $(`#${randomID} .userPhone`).text($('#phoneInput').val());
 
-    userDataTable.appendChild(userRow);
-
-    userRow.setAttribute('id', randomID);
-
-    userRowName.classList.add('userName');
-    userRowEmail.classList.add('userEmail');
-    userRowAddress.classList.add('userAddress');
-    userRowPhone.classList.add('userPhone');
-
-    userRowName.innerText = userName.value;
-    userRowEmail.innerText = userEmail.value;
-    userRowAddress.innerText = userAddress.value;
-    userRowPhone.innerText = userPhone.value;
-    //_________________________________________
-    userName.value = '';
-    userEmail.value = '';
-    userAddress.value = '';
-    userPhone.value = '';
     closeForm();
 }
 
-// _________key event_________
-window.addEventListener('keyup', function(e){
-    {
+// _________key events_________
+$(function(){
+    $('#employeeForm').on('keyup', function(e){
         if(e.keyCode == 27){
-        closeForm();
+            closeForm();
         }
-    }
-    {
-        // if(e.keyCode == 13){
-        //     if(document.querySelector('#addTitle').classList.contains('hidden')){
-        //         document.getElementById('hidenEditBtn').click();
-        //     }
-        //     // else if(document.getElementById('employeeForm').classList.contains('hidden')==false){
-        //     //     if(document.getElementById('addTitle').classList.contains('hidden')==false){
-        //     //         document.getElementById('addEmployee').click();
-        //     //     }                
-        //     // }
-        // }
-    }
+        if(e.keyCode == 13){
+            if($('#editTitle').is(':visible') && $('#employeeForm').is(':visible')){
+                updateEmployeeInfo();
+            }
+            else if($('#employeeForm').is(':visible') && $('#addTitle').is(':visible')){
+                createNewElement();
+            }
+        }
+    });
 });
-
-

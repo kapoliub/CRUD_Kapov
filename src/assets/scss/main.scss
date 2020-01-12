@@ -2,20 +2,18 @@
     display: none;
 }
 
-
-
 header{
     .row{
         padding: 10px;
         background-color: #485C7B;
         color: white;
-        button{
+        .btn{
             margin-left: 10px;
         }
     }
 }
 
-main{
+#employeeForm{
     background-color: #fff;
     position: absolute;
     top: 20%;
@@ -23,26 +21,28 @@ main{
     width: 400px;
     box-shadow: 0px 0px 30px 0 rgb(182, 182, 182);
     color: #485C7B;
-    span{
-        display: block;
+    .btn{
+        span{
+            display: block;
+        }
     }
-
     .formBody{
-        input, textarea{
+        .employeeInput{
             display: block;
             width: 100%;
             margin-bottom: 20px;
             border: 1px solid rgb(197, 198, 199);
-            border-radius: 3px;
+            border-radius: 5px;
             height: 35px;
             padding:0 10px;
         }
-        textarea{
+        #addressInput{
             resize: none;
             overflow: scroll;
             height: 70px;
+            padding-top: 5px;
         }
-        label{
+        .employeeLabel{
             margin-bottom: 5px;
             font-size: 0.9em;
         }
@@ -51,7 +51,7 @@ main{
         padding: 20px;
     }
     .title{
-        button{
+        #closeForm{
             background-color: inherit;
             border: none;
             outline: none;
@@ -82,28 +82,29 @@ main{
             }
         }
     }
-    .footer{
+    .employeeFormFooter{
         background-color: #EDF0F1;
         .btn-light{
             border: 1px solid grey;
         }
-        button, input{
+        .btn{
             margin-left: 10px;
             
         }
     }
 }
 
-section{
+.mainContent{
     .row{
         padding: 0 15px;
-        table{
+        color: #485C7B;
+        #userDataTable{
             width: 100%;
+            .tableTitles{
+                border-bottom-width: 4px;
+            }
             tr{
                 border-bottom: 1px solid #E9E9E9;
-                &:first-child{
-                    border-bottom-width: 4px;
-                }
             }
             th{
                 height: 80px;
@@ -117,7 +118,9 @@ section{
                 height: 70px;
             }
         }
-        color: #485C7B;
+        .userButtonsArea{
+            position: relative;
+        }
         .editBtn{
             color: #F7CA57;
             background-color: inherit;
@@ -133,6 +136,8 @@ section{
                     font-size: 0.8em;
                     padding: 3px;
                     border-radius: 3px;
+                    top: -8px;
+                    left: 10px;
                 }
                 &:active{
                     color: rgb(250, 182, 10);
@@ -154,6 +159,8 @@ section{
                     font-size: 0.8em;
                     padding: 3px;
                     border-radius: 3px;
+                    top: -8px;
+                    left: 32px;
                 }
                 &:active{
                     color: rgb(226, 28, 6);
