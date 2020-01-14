@@ -5,4 +5,6 @@ R - read
 U - update
 D - delete
 
-After downloading run in command line (open in folder with project) script "npm run scss" (for css file compiling)
+After downloading run in command line (open in folder with project) next commands:
+- npm init
+- npm run scss (for css file compiling)
