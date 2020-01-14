@@ -1,5 +1,5 @@
 function addNewEmployeeButtonClick(){
-    setDefaultInputBorders();
+    inputsErrorReset();
     $('#employeeForm').toggle();
     $("#nameInput").focus();
     if($('#editTitle').is(':visible')){
@@ -34,7 +34,7 @@ function closeForm(){
     $('#addTitle, #addEmployee ').show();
     $('#editTitle, #hidenEditBtn, #employeeForm').hide();
     $('#nameInput, #emailInput, #addressInput, #phoneInput').val('');
-    setDefaultInputBorders();
+    inputsErrorReset();
 }
 
 function deleteUserRow(id){
@@ -61,7 +61,7 @@ function editButtonClick(id){
 }
 
 function updateEmployeeInfo(){
-    setDefaultInputBorders();
+    inputsErrorReset();
     if(!checkInputValuesRequires()){
         return
     }
@@ -83,43 +83,60 @@ function updateEmployeeInfo(){
     closeForm();
 }
 
-function setDefaultInputBorders(){
-let border = {
-    prop: 'border',
-    value: '1px solid #c5c6c7'
+function inputsErrorReset(){
+let errorReset = {
+    prop: 'box-shadow',
+    value: 'none'
 };
 
-    $('#nameInput, #emailInput, #addressInput, #phoneInput').css(border.prop, border.value);
+    $('#nameInput, #emailInput, #addressInput, #phoneInput').css(errorReset.prop, errorReset.value);
 }
 
 function checkInputValuesRequires(){
     let error = {
-        prop: 'border',
-        value: '3px solid #cb444bcc'
+        prop: 'box-shadow',
+        value: '0 0 0 2pt #cb444bcc'
     };
+
+    let input1 = false;
+    let input2 = false;
+    let input3 = false;
+    let input4 = false;
 
     if($('#nameInput').val().trim().length < 1 || $('#nameInput').val().match(/\d/)){
         $('#nameInput').css(error.prop, error.value);
-        return
     }    
+    else{
+        input1 = true;
+    }
     if(!$('#emailInput').val().match(/@/)){
         $('#emailInput').css(error.prop, error.value);
-        return
+    }
+
+    else{
+        input2 = true;
     }
     if($('#addressInput').val().trim().length < 1){
         $('#addressInput').css(error.prop, error.value);
-        return
+    }
+    else{
+        input3 = true;
     }
     if($('#phoneInput').val().trim().length < 7 || !$('#phoneInput').val().match(/\+\d/)){
         $('#phoneInput').css(error.prop, error.value);
-        return
     }
-    return true;
+    else{
+        input4 = true;
+    }
+
+    if(input1 && input2 && input3 && input4){
+        return true
+    }
 }
 
 function createNewElement(){
     let randomID = String('userID-' + Math.random() * 1000000).split('.')[0];
-    setDefaultInputBorders();
+    inputsErrorReset();
     if(!checkInputValuesRequires()){
         return
     }
