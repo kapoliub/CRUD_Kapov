@@ -5,3 +5,4 @@ R - read
 U - update
 D - delete
 
+After downloading run in command line (open in folder with project) script "npm run scss" (for css file compiling)
