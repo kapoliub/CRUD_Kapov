@@ -6,5 +6,5 @@ CRUD application implements the main functions when working with databases.
 - Delete
 
 After downloading run in command line (open in folder with project) next commands:
-- npm init
+- npm install
 - npm run scss (for css file compiling)
