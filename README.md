@@ -9,4 +9,4 @@ After downloading run in command line (open in folder with project) next command
 - npm install
 - npm run scss (for css file compiling)
 
-P.S. check it https://kapoliub-crud.netlify.com/
+live demo https://kapoliub-crud.netlify.com/
