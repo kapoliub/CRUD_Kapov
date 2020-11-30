@@ -1,4 +1,4 @@
-[![Code Grade](https://www.code-inspector.com/project/CRUD_Kapov/score/svg)](https://www.code-inspector.com)
+https://www.code-inspector.com/project/16602/score/svg
 CRUD application implements the main functions when working with databases.
 
 - Create
